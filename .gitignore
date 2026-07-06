@@ -19,9 +19,6 @@ venv/
 # Windows
 Thumbs.db
 
-# Large generated files
-figures/*.png
-figures/*.pdf
 
 # Data
 data/*.npy
