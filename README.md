@@ -22,5 +22,5 @@ figures/
 - [x] Signal matrix
 - [x] Gram matrix
 - [x] Covariance matrix
-- [ ] Bhattacharyya distance
-- [ ] ZZB simulation
+- [x] Bhattacharyya distance
+- [x] ZZB simulation
