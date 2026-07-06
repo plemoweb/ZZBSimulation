@@ -1,6 +1,6 @@
 import numpy as np
 
-from delay import delay_signal
+from .delay import delay_signal
 
 
 def build_signal_matrix(signal, taus):
