@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Environment
+.venv/
+env/
+venv/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Large generated files
+figures/*.png
+figures/*.pdf
+
+# Data
+data/*.npy
+data/*.npz
+data/*.mat

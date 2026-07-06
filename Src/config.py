@@ -1,0 +1,6 @@
+FS = 20e6
+T = 20e-6
+B = 5e6
+
+SIGMA_NOISE = 1.0
+SIGMA_ALPHA = 1.0
