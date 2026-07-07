@@ -24,30 +24,23 @@ from .simulation import simulate_once
 from .scenario import generate_scenario
 from .waveform import generate_lfm
 
+from .config_class import SimulationConfig
+
 def monte_carlo_pe(
     *,
-    num_trials: int,
-    fs: float,
-    T: float,
-    B: float,
-    K: int,
-    target_index: int,
+    config: SimulationConfig,
     h: int,
-    max_delay: int,
-    min_spacing: int,
-    sigma_alpha: float = 1.0,
-    snr_db: float = 10.0,
 ):
     """
     Monte Carlo estimation of Pe(h).
 
     Parameters
     ----------
-    num_trials
-        Number of Monte Carlo trials.
+    config
+        Simulation configuration.
 
-    fs
-        Sampling frequency.
+    h
+        Delay perturbation.
 
     T
         Pulse duration.
@@ -87,21 +80,21 @@ def monte_carlo_pe(
     last_result = None
 
     _, waveform = generate_lfm(
-    fs,
-    T,
-    B,
+    config.fs,
+    config.T,
+    config.B,
     )
 
-    for _ in range(num_trials):
+    for _ in range(config.num_trials):
 
         # ----------------------------------
         # Random target generation
         # ----------------------------------
 
         taus = generate_scenario(
-            K=K,
-            max_delay=max_delay,
-            min_spacing=min_spacing,
+            K=config.K,
+            max_delay=config.max_delay,
+            min_spacing=config.min_spacing,
             mode="random",
         )
 
@@ -115,13 +108,13 @@ def monte_carlo_pe(
 
             taus=taus,
 
-            target_index=target_index,
+            target_index=config.target_index,
 
             h=h,
 
-            sigma_alpha=sigma_alpha,
+            sigma_alpha=config.sigma_alpha,
 
-            snr_db=snr_db,
+            snr_db=config.snr_db,
         )
 
         pe_all.append(result["Pe"])
@@ -162,7 +155,7 @@ def monte_carlo_pe(
         # Number of trials
         # -------------------------
 
-        "num_trials": num_trials,
+        "num_trials": config.num_trials,
 
         # -------------------------
         # Last realization
