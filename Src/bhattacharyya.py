@@ -48,13 +48,28 @@ def logdet_from_gram(
 
     return logdet
 
+def snr_db_to_noise_std(
+    snr_db: float,
+    sigma_alpha: float = 1.0,
+) -> float:
+    """
+    Convert SNR(dB) to noise standard deviation.
+
+    SNR = sigma_alpha^2 / sigma_noise^2
+    """
+
+    snr_linear = 10 ** (snr_db / 10)
+
+    sigma_noise = sigma_alpha / np.sqrt(snr_linear)
+
+    return float(sigma_noise)
 
 def bhattacharyya_distance(
     G0: np.ndarray,
     G1: np.ndarray,
     Gavg: np.ndarray,
     sigma_alpha: float = 1.0,
-    sigma_noise: float = 1.0,
+    snr_db: float = 10.0,
 ) -> float:
     """
     Compute Bhattacharyya distance.
@@ -75,6 +90,17 @@ def bhattacharyya_distance(
     float
         Bhattacharyya distance
     """
+    sigma_noise = snr_db_to_noise_std(
+    snr_db,
+    sigma_alpha,
+    )
+
+    # print("----------------------------")
+    # print("snr_db      =", snr_db)
+    # print("sigma_alpha =", sigma_alpha)
+    # print("sigma_noise =", sigma_noise)
+    # print("----------------------------")
+
 
     logdet0 = logdet_from_gram(
         G0,

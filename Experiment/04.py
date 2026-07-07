@@ -79,6 +79,7 @@ for h in H_VALUES:
             taus=taus,
             target_index=TARGET_INDEX,
             h=int(h),
+            snr_db=-10,
         )
 
         pe_sum += result["Pe"]

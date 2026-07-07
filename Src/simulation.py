@@ -116,7 +116,7 @@ def simulate_once(
     target_index,
     h,
     sigma_alpha=1.0,
-    sigma_noise=1.0,
+    snr_db=10.0,
 ):
     """
     Perform one complete simulation.
@@ -145,7 +145,7 @@ def simulate_once(
         G1,
         Gavg,
         sigma_alpha,
-        sigma_noise,
+        snr_db,
     )
 
     Pe = pe_bhattacharyya(BD)
