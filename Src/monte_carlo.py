@@ -21,8 +21,8 @@ Author:
 import numpy as np
 
 from .simulation import simulate_once
-from .random_targets import generate_random_targets
-
+from .scenario import generate_scenario
+from .waveform import generate_lfm
 
 def monte_carlo_pe(
     *,
@@ -86,16 +86,23 @@ def monte_carlo_pe(
 
     last_result = None
 
+    _, waveform = generate_lfm(
+    fs,
+    T,
+    B,
+    )
+
     for _ in range(num_trials):
 
         # ----------------------------------
         # Random target generation
         # ----------------------------------
 
-        taus = generate_random_targets(
+        taus = generate_scenario(
             K=K,
             max_delay=max_delay,
             min_spacing=min_spacing,
+            mode="random",
         )
 
         # ----------------------------------
@@ -103,13 +110,17 @@ def monte_carlo_pe(
         # ----------------------------------
 
         result = simulate_once(
-            fs=fs,
-            T=T,
-            B=B,
+
+            waveform=waveform,
+
             taus=taus,
+
             target_index=target_index,
+
             h=h,
+
             sigma_alpha=sigma_alpha,
+
             snr_db=snr_db,
         )
 

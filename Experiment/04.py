@@ -35,6 +35,7 @@ from Src.config import *
 from Src.simulation import simulate_once
 from Src.random_targets import generate_random_targets
 from Src.zzb import compute_zzb
+from Src.monte_carlo import monte_carlo_pe
 
 
 # ============================================================
@@ -47,7 +48,7 @@ H_VALUES = np.arange(0, 41)
 
 N_TRIALS = 500
 
-
+snr_db = -10.0
 # ============================================================
 # Monte Carlo
 # ============================================================
@@ -60,35 +61,20 @@ print("=" * 60)
 
 for h in H_VALUES:
 
-    pe_sum = 0.0
+    result = monte_carlo_pe(
+        h=h,
+        num_trials=N_TRIALS,
+        snr_db=snr_db,
+        fs=FS,
+        T=T,
+        B=B,
+        K=K,
+        target_index=TARGET_INDEX,
+        max_delay=int(T * FS),
+        min_spacing=MIN_SPACING,
+    )
 
-    max_delay = int(T * FS) - int(h)
-
-    for _ in range(N_TRIALS):
-
-        taus = generate_random_targets(
-            K=K,
-            max_delay=max_delay,
-            min_spacing=MIN_SPACING,
-        )
-
-        result = simulate_once(
-            fs=FS,
-            T=T,
-            B=B,
-            taus=taus,
-            target_index=TARGET_INDEX,
-            h=int(h),
-            snr_db=-10,
-        )
-
-        pe_sum += result["Pe"]
-
-    pe_mean = pe_sum / N_TRIALS
-
-    average_pe.append(pe_mean)
-
-    print(f"h = {h:2d}    Pe = {pe_mean:.6e}")
+    average_pe.append(result["mean_pe"])
 
 average_pe = np.array(average_pe)
 

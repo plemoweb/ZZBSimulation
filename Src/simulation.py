@@ -23,7 +23,6 @@ Later:
 
 import numpy as np
 
-from .waveform import generate_lfm
 from .signal_matrix import build_signal_matrix
 from .gram import gram_matrix
 from .bhattacharyya import bhattacharyya_distance
@@ -109,9 +108,7 @@ def compute_three_grams(
     return G0, G1, Gavg
 
 def simulate_once(
-    fs,
-    T,
-    B,
+    waveform,
     taus,
     target_index,
     h,
@@ -127,11 +124,7 @@ def simulate_once(
     dict
     """
 
-    _, waveform = generate_lfm(
-        fs,
-        T,
-        B,
-    )
+
 
     G0, G1, Gavg = compute_three_grams(
         waveform,
