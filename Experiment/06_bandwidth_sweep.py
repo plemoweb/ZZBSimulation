@@ -1,10 +1,10 @@
 """
-Experiment 05
+Experiment 06
 
-SNR Sweep
+Bandwidth Sweep
 
 Evaluate the Bhattacharyya-relaxed ZZB
-under different SNR values.
+under different bandwidth values.
 """
 
 from pathlib import Path
@@ -40,16 +40,16 @@ zzb_all = []
 pe_curves = []
 
 # ==========================================================
-# SNR Sweep
+# Bandwidth Sweep
 # ==========================================================
 
-for i, snr in enumerate(SNR_LIST):
+for i, bw in enumerate(BANDWIDTH_LIST):
 
     print("=" * 60)
-    print(f"SNR = {snr:.1f} dB ({i+1}/{len(SNR_LIST)})")
+    print(f"Bandwidth = {bw:.1f} MHz ({i+1}/{len(BANDWIDTH_LIST)})")
     print("=" * 60)
 
-    config.snr_db = snr
+    config.B = bw
 
     pe_curve = []
 
@@ -113,25 +113,25 @@ pe_curves = np.asarray(pe_curves)
 # Save
 # ==========================================================
 
-result_dir = PROJECT_ROOT / "Results" /"Experiment_05_SNR_Sweep"
+result_dir = PROJECT_ROOT / "Results" /"Experiment_06_Bandwidth_Sweep"
 
 result_dir.mkdir(exist_ok=True)
 
-np.save(result_dir / "snr_values.npy", SNR_LIST)
+np.save(result_dir / "bandwidth_values.npy", BANDWIDTH_LIST)
 
-np.save(result_dir / "zzb_vs_snr.npy", zzb_all)
+np.save(result_dir / "zzb_vs_bandwidth.npy", zzb_all)
 
 np.save(result_dir / "pe_curves.npy", pe_curves)
 
 # ==========================================================
 # Figure 1
 # ==========================================================
-figure_dir = PROJECT_ROOT / "Figures" / "Experiment_05_SNR_Sweep"
+figure_dir = PROJECT_ROOT / "Figures" / "Experiment_06_Bandwidth_Sweep"
 figure_dir.mkdir(exist_ok=True)
 
 plt.figure(figsize=(7,5))
 
-for i, snr in enumerate(SNR_LIST):
+for i, bw in enumerate(BANDWIDTH_LIST):
 
     plt.semilogy(
 
@@ -139,7 +139,7 @@ for i, snr in enumerate(SNR_LIST):
 
         pe_curves[i],
 
-        label=f"{snr} dB",
+        label=f"{bw:.1f} MHz",
 
     )
 
@@ -149,14 +149,14 @@ plt.xlabel("Delay perturbation h")
 
 plt.ylabel("Average Pe")
 
-plt.title("Average Pe under different SNR")
+plt.title("Average Pe under different Bandwidth")
 
 plt.legend()
 
 plt.tight_layout()
 
 plt.savefig(
-    figure_dir / "exp05_average_pe.png",
+    figure_dir / "exp06_average_pe.png",
     dpi=300,
 )
 # ==========================================================
@@ -167,7 +167,7 @@ plt.figure(figsize=(6,5))
 
 plt.plot(
 
-    SNR_LIST,
+    BANDWIDTH_LIST,
 
     zzb_all,
 
@@ -177,16 +177,16 @@ plt.plot(
 
 plt.grid(True)
 
-plt.xlabel("SNR (dB)")
+plt.xlabel("Bandwidth (MHz)")
 
 plt.ylabel("Bhattacharyya-relaxed ZZB")
 
-plt.title("ZZB versus SNR")
+plt.title("ZZB versus Bandwidth")
 
 plt.tight_layout()
 
 plt.savefig(
-    figure_dir / "exp05_zzb_vs_snr.png",
+    figure_dir / "exp06_zzb_vs_bandwidth.png",
     dpi=300,
 )
 plt.show()
