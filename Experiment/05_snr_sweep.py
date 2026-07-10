@@ -78,7 +78,7 @@ for i, snr in enumerate(SNR_LIST):
     # --------------------------------------
 
     pe_vf = valley_filling(pe_curve)
-
+    #pe_vf=pe_curve
     # --------------------------------------
     # ZZB
     # --------------------------------------
@@ -169,7 +169,7 @@ plt.plot(
 
     SNR_LIST,
 
-    zzb_all,
+    np.log(zzb_all),
 
     marker="o",
 

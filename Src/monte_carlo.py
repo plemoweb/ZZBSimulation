@@ -95,7 +95,8 @@ def monte_carlo_pe(
             K=config.K,
             max_delay=config.max_delay,
             min_spacing=config.min_spacing,
-            mode="random",
+            mode=config.scenario_mode,
+            fixed_taus=config.fixed_taus,
         )
 
         # ----------------------------------

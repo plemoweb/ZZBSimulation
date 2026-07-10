@@ -51,4 +51,4 @@ def similarity(BD: float) -> float:
     float
     """
 
-    return float(np.exp(-2.0 * BD))
+    return float(np.exp(-BD))

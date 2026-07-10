@@ -31,7 +31,7 @@ def generate_scenario(
     max_delay: int,
     min_spacing: int = 0,
     mode: str = "random",
-    taus: Optional[np.ndarray] = None,
+    fixed_taus: Optional[np.ndarray] = None,
 ) -> np.ndarray:
     """
     Generate one target scenario.
@@ -56,7 +56,7 @@ def generate_scenario(
         "fixed"
             Use user-provided delays.
 
-    taus
+    fixed_taus
         Required when mode="fixed".
 
     Returns
@@ -75,19 +75,19 @@ def generate_scenario(
 
     elif mode == "fixed":
 
-        if taus is None:
+        if fixed_taus is None:
             raise ValueError(
-                "taus must be provided when mode='fixed'."
+                "fixed_taus must be provided when mode='fixed'."
             )
 
-        taus = np.asarray(taus, dtype=int)
+        fixed_taus = np.asarray(fixed_taus, dtype=int)
 
-        if len(taus) != K:
+        if len(fixed_taus) != K:
             raise ValueError(
-                "Length of taus must equal K."
+                "Length of fixed_taus must equal K."
             )
 
-        return np.sort(taus)
+        return np.sort(fixed_taus)
 
     else:
 

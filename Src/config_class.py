@@ -44,6 +44,10 @@ class SimulationConfig:
 
     snr_db: float = 10.0
 
+    scenario_mode: str = "fixed"
+
+    fixed_taus: list | None = None
+
 from .config import *
 
 def default_config():
@@ -69,4 +73,8 @@ def default_config():
         sigma_alpha=SIGMA_ALPHA,
 
         snr_db=SNR_DB,
+
+        scenario_mode=SCENARIO_MODE,
+
+        fixed_taus=FIXED_TAUS,
     )
